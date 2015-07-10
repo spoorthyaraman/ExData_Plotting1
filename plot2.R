@@ -1,4 +1,4 @@
-###This file contains the code to generate plot1 per the exercise###
+###This file contains the code to generate plot2 per the exercise###
 
 ###Step 1: Reading the Data 
 
@@ -19,15 +19,22 @@ time_var <- as.Date(time_var)
 #Selecting data needed only for 2007-02-01 and 2007-02-02
 cdata <- subset(pdata, Date == as.Date("2007-02-01") | Date == as.Date("2007-02-02"))
 
+#Obtaining the date and time for further calculation
+#I have used the lubridate package - Please make sure its installed and loaded
+date_time <- paste(cdata$Date, cdata$Time, sep = " ")
+date_time <- ymd_hms(date_time)
+
+#Adding that column to the original dataframe
+cdata <- cbind(cdata,date_time)
 ################################################
 
-###Step 2: Plotting the histogram
+###Step 2: Plotting the graph
 
-#Open the PNG file device
-png("plot1.png")
+#Open the PNG device
+png("plot2.png")
 
-#Call the histogram function
-hist(as.numeric(as.character(cdata$Global_active_power)), col="red", xlab = "Global Active Power (kilowatts)", main = "Global Active Power")
+#Call the plot function
+plot(cdata$date_time,as.numeric(as.character(cdata$Global_active_power)),type="s", xlab="", ylab="Global Active Power (kilowatts)")
 
-#Switch the device off
+#Switch off the device
 dev.off()
